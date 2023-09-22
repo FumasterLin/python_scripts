@@ -5,7 +5,6 @@
 
 from bs4 import BeautifulSoup
 import re
-import argparse
 
 
 def write_struct(file, name, addr, members, indent=''):
@@ -91,8 +90,8 @@ def write_header_file(file_name, addr2name, name2members):
     file.close()
 
 
-def parse_html(file_name):
-    print("read %s start..." % file_name)
+def parse_xml(file_name):
+    print("read htm file start...")
     file = open(file_name, 'rb')
     html = file.read()
     bs = BeautifulSoup(html,"html.parser")
@@ -188,16 +187,30 @@ def parse_html(file_name):
     print("parse done...")
     return [addr2name, name2members]
 
+import xml.dom.minidom
+def parse_xml_test(file_name):
+    print("read xml file start...")
+    file = open(file_name, 'rb')
+    xml = file.read()
+    bs = BeautifulSoup(xml,"xml")
+    print(bs.)
+    tables = bs.find_all('a')
+    print("parse start... {}", len(tables))
+    for table in tables:
+        print(table)
+    file.close()
+
+    # domTree = xml.dom.minidom.parse(file_name)
+    # # 文档根元素
+    # rootNode = domTree.documentElement
+    # print(rootNode.nodeName)
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--input', dest='input', type=str, help='intput file path')
-    parser.add_argument('-o', '--output', dest='output', type=str, help='output file path')
-    args = parser.parse_args()
-    print("input file {} output file {}".format(args.input, args.output))
-    regs = parse_html(args.input)
-    addr2name = regs[0]
-    name2members = regs[1]
-    print("generate header file %s start..." % args.output)
-    write_header_file(args.output, addr2name, name2members)
-    print("generate header file %s done..." % args.output)
+    parse_xml_test("./RKVDEC.xml")
+    # regs = parse_xml("./RKVDEC.xml")
+    # addr2name = regs[0]
+    # name2members = regs[1]
+    # print("generate header file start...")
+    # write_header_file("vdpu382.h", addr2name, name2members)
+    # print("generate header file done...")
 
