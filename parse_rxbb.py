@@ -116,6 +116,8 @@ def parse_html(file_name):
             name = reg_name.get_text()
             if "VEPU_" in name:
                 name = name[5:]
+            if "VEPU510_" in name:
+                name = name[8:]
             if "rkvdec_" in name:
                 name = name[7:]
             name_list.append(name)
